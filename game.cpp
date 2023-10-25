@@ -1,4 +1,4 @@
-// Last Changed on Mac
+// Last Changed on PC
 
 #include <iostream>
 #include <map>
@@ -280,7 +280,7 @@ void printCharacterSheet(Entity e){
 }
 
 int main(){
-    system("clear");
+    system("cls");
 
     // Martial Techniques
     Technique jab = Technique("Jab", 0, 7, "A quick strike.");
