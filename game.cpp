@@ -280,7 +280,7 @@ void printCharacterSheet(Entity e){
 }
 
 int main(){
-    system("cls");
+    system("clear");
 
     // Martial Techniques
     Technique jab = Technique("Jab", 0, 7, "A quick strike.");
