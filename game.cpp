@@ -12,7 +12,7 @@ class Technique{
         int base_stat = 0;
         string description;
         vector<string> types = {"Martial", "Spiritual", "Unique"};
-        
+
     public:
         Technique(string n, int t, int b, string d){
             type = t;
@@ -45,9 +45,13 @@ class Entity{
 
         int baseDamage = 0;
 
-        Entity(string n, int l){
+        string affinity;
+        vector<string> affinities = {"None", "Air", "Fire", "Ice", "Electricity", "Combustion", "Pyschokinesis", "Poison", "Gravity", "Plant"};
+
+        Entity(string n, int l, int a){
             name = n;
             level = l;
+            affinity = affinities[a];
 
             baseDamage = level*2;
             maxHealthPoints = level*30;
@@ -76,6 +80,10 @@ class Entity{
 
         int getDamage(){
             return baseDamage;
+        }
+
+        string getAffinity(){
+            return affinity;
         }
 
         void takeDamage(int dmg){
@@ -121,7 +129,7 @@ class Player: public Entity{
 
     public:
         Player(string n, int l)
-        : Entity(n, l)
+        : Entity(n, l, 0)
         {
             maxHealthPoints = level*15;
             healthPoints = maxHealthPoints;
@@ -275,6 +283,7 @@ void printCharacterSheet(Player e){
     cout << "Name: " << e.getName() << ", Lv. " << e.getLevel() << endl;
     cout << "HP: " << e.getHp() << " / " << e.getMaxHp() << ", Stamina: " << e.getStamina() << " / " << e.getMaxStamina() << endl;
     cout << "Spirit: " << e.getSpirit() << " / " << e.getMaxSpirit() << ", Stat Point(s): " << e.getStatPoints() << endl;
+    cout << "Affinity: " << e.getAffinity() << endl;
     cout << "Experience: " << e.getExperience() << " / " << e.getExperienceNeeded() << endl;
     cout << "Stats:" << endl;
     cout << "\tCombat: " << e.getStat("Combat") << endl;
@@ -314,46 +323,14 @@ void printCharacterSheet(Player e){
 void printEntity(Entity e){
     cout << "Name: " << e.getName() << ", Lv. " << e.getLevel() << endl;
     cout << "HP: " << e.getHp() << " / " << e.getMaxHp() << endl;
-    cout << "Damage: " << e.getDamage();
+    cout << "Damage: " << e.getDamage() << endl;
+    cout << "Affinity: " << e.getAffinity() << endl;
 }
 
 int main(){
     system("clear");
-    // Martial Techniques
-    Technique jab = Technique("Jab", 0, 7, "A quick strike.");
-    Technique manjiKick = Technique("Manji Kick", 0, 14, "A kick from the ground.");
-
-    // Spirit Techniques
-    Technique spiritGun = Technique("Spirit Gun", 1, 15, "A small blast of spirit energy.");
-    Technique waltz = Technique("Waltz", 1, 0, "Successive 'Steps', high speed movement.");
-    Technique piercingSoul = Technique("Piercing Soul", 1, 25, "A piercing shot of spirit energy.");
     
-    // Unique Techniques
-    Technique rejection = Technique("Rejection", 2, 7, "Reject any and all phenomena.");
-    Technique femboy = Technique("Femboy Mode", 2, 9999, "Activate Femboy Mode");
 
-    cout << "--- Entity Test ---" << endl;
-    Entity NPC = Entity("Rin", 100); // Create Entity "Rin" and Initialize at Level 100
-    printEntity(NPC);
-    cout << "--- Player Test ---" << endl;
-    Player riley = Player("Riley", 1); // Create Player "Riley", and Initialize at Level 1
-    riley.addExperience(109000); // Added XP instead of initializing at lvl 69
-    riley.increaseStats(50, 10, 144); // Added stats to make u a glass cannon
-    riley.maxResources(); // Max out health after adding stats (increasing stats does not auto reset health)
-    // Add Techniques to Player Technique 2D Vector
-    riley.learnTechnique(waltz);
-    riley.learnTechnique(manjiKick);
-    riley.learnTechnique(rejection);
-    riley.learnTechnique(piercingSoul);
-    riley.learnTechnique(spiritGun);
-    riley.learnTechnique(jab);
-    riley.learnTechnique(femboy);
-    riley.raiseConcept("Emission");
-
-    riley.takeDamage(NPC.getDamage());
-    printCharacterSheet(riley); // Print Character Information
-
-    
 
     return 0;
 }
