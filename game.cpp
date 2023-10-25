@@ -12,7 +12,7 @@ class Technique{
         int base_stat = 0;
         string description;
         vector<string> types = {"Martial", "Spiritual", "Unique"};
-    
+        
     public:
         Technique(string n, int t, int b, string d){
             type = t;
@@ -43,10 +43,13 @@ class Entity{
         int healthPoints = 0;
         int maxHealthPoints = 0;
 
+        int baseDamage = 0;
+
         Entity(string n, int l){
             name = n;
             level = l;
 
+            baseDamage = level*2;
             maxHealthPoints = level*30;
             healthPoints = maxHealthPoints;
         }
@@ -70,9 +73,17 @@ class Entity{
         int getMaxHp(){
             return maxHealthPoints;
         }
+
+        int getDamage(){
+            return baseDamage;
+        }
+
+        void takeDamage(int dmg){
+            healthPoints = healthPoints - dmg;
+        }
 };
 
-class Player: protected Entity{
+class Player: public Entity{
     private:
         map<string,int> stats = {
             {"Combat", 1},
@@ -122,13 +133,6 @@ class Player: protected Entity{
             spiritPoints = maxSpiritPoints;
 
             techniques.resize(100);
-        }
-
-        string getName(){
-            return name;
-        }
-        int getLevel(){
-            return level;
         }
 
         void levelUp(){
@@ -226,20 +230,12 @@ class Player: protected Entity{
             return stats.at(index);
         }
 
-        int getHp(){
-            return healthPoints;
-        }
-
         int getAttackDamage(){
             return attackDamage;
         }
 
         int getAbilityPower(){
             return abilityPower;
-        }
-
-        int getMaxHp(){
-            return maxHealthPoints;
         }
 
         int getStamina(){
@@ -272,6 +268,7 @@ class Player: protected Entity{
             concepts.at(concept) += 1;
         }
 };
+
 
 // Functions Purely for test / console !!
 void printCharacterSheet(Player e){
@@ -317,6 +314,7 @@ void printCharacterSheet(Player e){
 void printEntity(Entity e){
     cout << "Name: " << e.getName() << ", Lv. " << e.getLevel() << endl;
     cout << "HP: " << e.getHp() << " / " << e.getMaxHp() << endl;
+    cout << "Damage: " << e.getDamage();
 }
 
 int main(){
@@ -334,6 +332,9 @@ int main(){
     Technique rejection = Technique("Rejection", 2, 7, "Reject any and all phenomena.");
     Technique femboy = Technique("Femboy Mode", 2, 9999, "Activate Femboy Mode");
 
+    cout << "--- Entity Test ---" << endl;
+    Entity NPC = Entity("Rin", 100); // Create Entity "Rin" and Initialize at Level 100
+    printEntity(NPC);
     cout << "--- Player Test ---" << endl;
     Player riley = Player("Riley", 1); // Create Player "Riley", and Initialize at Level 1
     riley.addExperience(109000); // Added XP instead of initializing at lvl 69
@@ -348,11 +349,11 @@ int main(){
     riley.learnTechnique(jab);
     riley.learnTechnique(femboy);
     riley.raiseConcept("Emission");
+
+    riley.takeDamage(NPC.getDamage());
     printCharacterSheet(riley); // Print Character Information
 
-    cout << "--- Entity Test ---" << endl;
-    Entity NPC = Entity("Rin", 100); // Create Entity "Rin" and Initialize at Level 100
-    printEntity(NPC);
+    
 
     return 0;
 }
