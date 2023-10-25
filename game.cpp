@@ -1,4 +1,4 @@
-// Last Changed on PC
+// Last Changed on Mac
 
 #include <iostream>
 #include <map>
@@ -36,17 +36,43 @@ class Technique{
 };
 
 class Entity{
-    private:
+    protected:
+        string name;
+        int level = 1;
 
+        int healthPoints = 0;
+        int maxHealthPoints = 0;
+
+        Entity(string n, int l){
+            name = n;
+            level = l;
+
+            maxHealthPoints = level*30;
+            healthPoints = maxHealthPoints;
+        }
+
+        void maxResources(){
+            healthPoints = maxHealthPoints;
+        }
+
+        string getName(){
+            return name;
+        }
+
+        int getLevel(){
+            return level;
+        }
+};
+
+class Player: protected Entity{
+    private:
         map<string,int> stats = {
             {"Combat", 1},
             {"Endurance", 1},
             {"Spirit", 1},
             {"Potential", 1}
         };
-
-        string name;
-        int level = 1;
+        
         double experience = 0;
         int stat_point = 0;
         
@@ -62,8 +88,7 @@ class Entity{
         vector<vector<Technique>> techniques;
 
         // Resource Variables
-        int healthPoints = 0;
-        int maxHealthPoints = 0;
+        
         int staminaPoints = 0;
         int maxStaminaPoints = 0;
         int spiritPoints = 0;
@@ -75,20 +100,26 @@ class Entity{
         int abilityPower = stats.at("Spirit")*5;
 
     public:
-        Entity(string n, int l){
-            name = n;
-            level = l;
-
+        Player(string n, int l)
+        : Entity(n, l)
+        {
             maxHealthPoints = level*15;
             healthPoints = maxHealthPoints;
 
-            maxStaminaPoints = level*4;
+            maxStaminaPoints = getLevel()*4;
             staminaPoints = maxStaminaPoints;
 
-            maxSpiritPoints = level*3;
+            maxSpiritPoints = getLevel()*3;
             spiritPoints = maxSpiritPoints;
 
             techniques.resize(100);
+        }
+
+        string getName(){
+            return name;
+        }
+        int getLevel(){
+            return level;
         }
 
         void levelUp(){
@@ -142,20 +173,6 @@ class Entity{
             stat_point -= total;
         }
 
-        void maxResources(){
-            healthPoints = maxHealthPoints;
-            staminaPoints = maxStaminaPoints;
-            spiritPoints = maxSpiritPoints;
-        }
-
-        string getName(){
-            return name;
-        }
-
-        int getLevel(){
-            return level;
-        }
-
         double getExperience(){
             return experience;
         }
@@ -180,6 +197,12 @@ class Entity{
                     techniques[2].push_back(t);
                     break;
             }
+        }
+
+        void maxResources(){
+            healthPoints = maxHealthPoints;
+            staminaPoints = maxStaminaPoints;
+            spiritPoints = maxSpiritPoints;
         }
 
         vector<Technique> getTechniques(int type){
@@ -235,11 +258,10 @@ class Entity{
                 stats.at("Potential") += 1;
             }
         }
-
 };
 
 // Functions Purely for test / console !!
-void printCharacterSheet(Entity e){
+void printCharacterSheet(Player e){
     cout << "Name: " << e.getName() << ", Lv. " << e.getLevel() << endl;
     cout << "HP: " << e.getHp() << " / " << e.getMaxHp() << ", Stamina: " << e.getStamina() << " / " << e.getMaxStamina() << endl;
     cout << "Spirit: " << e.getSpirit() << " / " << e.getMaxSpirit() << ", Stat Point(s): " << e.getStatPoints() << endl;
@@ -280,7 +302,7 @@ void printCharacterSheet(Entity e){
 }
 
 int main(){
-    system("cls");
+    system("clear");
 
     // Martial Techniques
     Technique jab = Technique("Jab", 0, 7, "A quick strike.");
@@ -295,7 +317,7 @@ int main(){
     Technique rejection = Technique("Rejection", 2, 7, "Reject any and all phenomena.");
     Technique femboy = Technique("Femboy Mode", 2, 9999, "Activate Femboy Mode");
 
-    Entity riley = Entity("Riley", 1);
+    Player riley = Player("Riley", 1);
 
     riley.addExperience(109000); // Added XP instead of initializing at lvl 69
     riley.increaseStats(50, 10, 144); // Added stats to make u a glass cannon
@@ -307,6 +329,7 @@ int main(){
     riley.learnTechnique(spiritGun);
     riley.learnTechnique(jab);
     riley.learnTechnique(femboy);
+    riley.maxResources();
     printCharacterSheet(riley);
 
     return 0;
