@@ -36,7 +36,7 @@ class Technique{
 };
 
 class Entity{
-    protected:
+    public:
         string name;
         int level = 1;
 
@@ -61,6 +61,14 @@ class Entity{
 
         int getLevel(){
             return level;
+        }
+
+        int getHp(){
+            return healthPoints;
+        }
+
+        int getMaxHp(){
+            return maxHealthPoints;
         }
 };
 
@@ -303,7 +311,6 @@ void printCharacterSheet(Player e){
 
 int main(){
     system("clear");
-
     // Martial Techniques
     Technique jab = Technique("Jab", 0, 7, "A quick strike.");
     Technique manjiKick = Technique("Manji Kick", 0, 14, "A kick from the ground.");
@@ -317,6 +324,7 @@ int main(){
     Technique rejection = Technique("Rejection", 2, 7, "Reject any and all phenomena.");
     Technique femboy = Technique("Femboy Mode", 2, 9999, "Activate Femboy Mode");
 
+    cout << "--- Player Test ---" << endl;
     Player riley = Player("Riley", 1);
 
     riley.addExperience(109000); // Added XP instead of initializing at lvl 69
@@ -331,6 +339,12 @@ int main(){
     riley.learnTechnique(femboy);
     riley.maxResources();
     printCharacterSheet(riley);
+
+    cout << "--- Entity Test ---" << endl;
+    Entity NPC = Entity("Rin", 100);
+    cout << "Name: " << NPC.getName() << ", Lv. " << NPC.getLevel() << endl;
+    cout << "HP: " << NPC.getHp() << " / " << NPC.getMaxHp() << endl;
+
 
     return 0;
 }
