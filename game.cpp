@@ -84,13 +84,14 @@ class Player: protected Entity{
         double experience = 0;
         int stat_point = 0;
         
-        map<string,bool> concepts = {
-            {"Aura Manipulation"    ,   false},
-            {"Sense"                ,   false},
-            {"Step"                 ,   false},
-            {"Release"              ,   false},
-            {"Medicine"             ,   false},
-            {"Counter"              ,   false}
+        map<string, int> concepts = {
+            {"Aura Manipulation"    ,   0},
+            {"Sense"                ,   0},
+            {"Step"                 ,   0},
+            {"Release"              ,   0},
+            {"Emission"             ,   0},
+            {"Medicine"             ,   0},
+            {"Counter"              ,   0}
         };
 
         vector<vector<Technique>> techniques;
@@ -185,7 +186,7 @@ class Player: protected Entity{
             return experience;
         }
 
-        bool getConcept(string index){
+        int getConcept(string index){
             return concepts.at(index);
         }
 
@@ -266,6 +267,10 @@ class Player: protected Entity{
                 stats.at("Potential") += 1;
             }
         }
+
+        void raiseConcept(string concept){
+            concepts.at(concept) += 1;
+        }
 };
 
 // Functions Purely for test / console !!
@@ -293,7 +298,7 @@ void printCharacterSheet(Player e){
             break;  
     }
     cout << "Concepts:" << endl;
-    string concepts[] = {"Aura Manipulation", "Sense", "Step", "Release", "Medicine", "Counter"};
+    string concepts[] = {"Aura Manipulation", "Sense", "Step", "Release", "Emission", "Medicine", "Counter"};
     for(string s : concepts){
         cout << "\t" << s << ": " << e.getConcept(s) << endl;
     }
@@ -307,6 +312,11 @@ void printCharacterSheet(Player e){
             cout << "\t\t" << j+1 << ") " << e.getTechnique(i,j).getName() << endl;
         }
     }
+}
+
+void printEntity(Entity e){
+    cout << "Name: " << e.getName() << ", Lv. " << e.getLevel() << endl;
+    cout << "HP: " << e.getHp() << " / " << e.getMaxHp() << endl;
 }
 
 int main(){
@@ -325,11 +335,11 @@ int main(){
     Technique femboy = Technique("Femboy Mode", 2, 9999, "Activate Femboy Mode");
 
     cout << "--- Player Test ---" << endl;
-    Player riley = Player("Riley", 1);
-
+    Player riley = Player("Riley", 1); // Create Player "Riley", and Initialize at Level 1
     riley.addExperience(109000); // Added XP instead of initializing at lvl 69
     riley.increaseStats(50, 10, 144); // Added stats to make u a glass cannon
-
+    riley.maxResources(); // Max out health after adding stats (increasing stats does not auto reset health)
+    // Add Techniques to Player Technique 2D Vector
     riley.learnTechnique(waltz);
     riley.learnTechnique(manjiKick);
     riley.learnTechnique(rejection);
@@ -337,14 +347,12 @@ int main(){
     riley.learnTechnique(spiritGun);
     riley.learnTechnique(jab);
     riley.learnTechnique(femboy);
-    riley.maxResources();
-    printCharacterSheet(riley);
+    riley.raiseConcept("Emission");
+    printCharacterSheet(riley); // Print Character Information
 
     cout << "--- Entity Test ---" << endl;
-    Entity NPC = Entity("Rin", 100);
-    cout << "Name: " << NPC.getName() << ", Lv. " << NPC.getLevel() << endl;
-    cout << "HP: " << NPC.getHp() << " / " << NPC.getMaxHp() << endl;
-
+    Entity NPC = Entity("Rin", 100); // Create Entity "Rin" and Initialize at Level 100
+    printEntity(NPC);
 
     return 0;
 }
