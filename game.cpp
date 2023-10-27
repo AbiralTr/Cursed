@@ -1,5 +1,5 @@
 // Last Changed on Mac
-
+#include <SDL.h>
 #include <iostream>
 #include <map>
 #include <vector>
@@ -328,7 +328,7 @@ void printEntity(Entity e){
 }
 
 int main(){
-    system("clear");
+    system("cls");
     
 
 
