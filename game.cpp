@@ -1,4 +1,4 @@
-// Last Changed on PC
+// Last Changed on Mac
 #include <SDL2/SDL.h>
 #include <iostream>
 #include <map>
@@ -327,7 +327,7 @@ void printEntity(Entity e){
     cout << "Affinity: " << e.getAffinity() << endl;
 }
 
-int main(int argv, char** args){ 
+void runSDL(){
     SDL_Init(SDL_INIT_EVERYTHING);
     SDL_Window *window = SDL_CreateWindow("Cursed - Version 0.0.0", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 600, 400, SDL_WINDOW_SHOWN);
     SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, 0);
@@ -339,6 +339,10 @@ int main(int argv, char** args){
     SDL_RenderPresent(renderer);
 
     SDL_Delay(10000);
+}
+
+int main(int argv, char** args){ 
+    runSDL();
 
     return 0;
 }
