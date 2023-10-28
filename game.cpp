@@ -1,4 +1,4 @@
-// Last Changed on Mac
+// Last Changed on PC
 #include <SDL2/SDL.h>
 #include <iostream>
 #include <map>
