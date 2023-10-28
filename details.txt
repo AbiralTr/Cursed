@@ -1,8 +1,0 @@
-Created by Abiral Tuladhar, 10/15/2023
-
-Name: Cursed
-
-Style Description: An action adventure game inspired by Dragon Ball Z Buu's Fury and GBA Pokemon.
-
-
-
