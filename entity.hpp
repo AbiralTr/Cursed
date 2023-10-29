@@ -1,6 +1,7 @@
 #include <iostream>
 #include <map>
 #include <vector>
+#include <fstream>
 using namespace std;
 
 
@@ -273,6 +274,19 @@ class Player: public Entity{
 
         void raiseConcept(string concept){
             concepts.at(concept) += 1;
+        }
+};
+
+class NPC: public Entity{
+    private:
+        int companionship_level = 0;
+        ifstream dialogue_file();
+
+    public:
+        NPC(string n, int l, int a)
+        : Entity(n, l, a)
+        {
+            // Add Dialogue File
         }
 };
 
