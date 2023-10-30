@@ -1,5 +1,8 @@
 #include "game_class.hpp"
 
+SDL_Texture* playerTex;
+
+
 Game::Game(){
 
 }
@@ -26,9 +29,11 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
         }
         
         isRunning = true;
-    } else{
-        isRunning = false;
-    }
+    } 
+
+    SDL_Surface* tempSurface = IMG_Load("assets/sprites/male_mc/Male_Sprite_Front_Nuetral.png");
+    playerTex = SDL_CreateTextureFromSurface(renderer, tempSurface);
+    SDL_FreeSurface(tempSurface);
 }
 
 void Game::handleEvents(){
@@ -50,6 +55,8 @@ void Game::update(){
 
 void Game::render(){
     SDL_RenderClear(renderer);
+    // this is where we add stuff to render
+    SDL_RenderCopy(renderer, playerTex, NULL, NULL);
     // this is where we add stuff to render
     SDL_RenderPresent(renderer);
 }
