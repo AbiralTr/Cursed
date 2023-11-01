@@ -3,7 +3,7 @@
 #include <map>
 #include <vector>
 #include "entity.hpp"
-#include "game_class.hpp"
+#include "game.h"
 
 Game *game = nullptr;
 

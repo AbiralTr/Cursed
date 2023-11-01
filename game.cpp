@@ -1,4 +1,4 @@
-#include "game_class.hpp"
+#include "game.h"
 
 SDL_Texture* playerTex;
 
