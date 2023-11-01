@@ -1,7 +1,7 @@
+
+#include "GameObject.h"
 #include "game.h"
-
-SDL_Texture* playerTex;
-
+GameObject* player;
 
 Game::Game(){
 
@@ -31,9 +31,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
         isRunning = true;
     } 
 
-    SDL_Surface* tempSurface = IMG_Load("assets/sprites/male_mc/Male_Sprite_Front_Nuetral.png");
-    playerTex = SDL_CreateTextureFromSurface(renderer, tempSurface);
-    SDL_FreeSurface(tempSurface);
+    player = new GameObject("assets/sprites/male_mc/Male_Sprite_Front_Nuetral.png", renderer, 0, 0);
 }
 
 void Game::handleEvents(){
@@ -49,14 +47,13 @@ void Game::handleEvents(){
 }
 
 void Game::update(){
-    cnt++;
-    std::cout << cnt << std::endl;
+    player->Update();
 }
 
 void Game::render(){
     SDL_RenderClear(renderer);
     // this is where we add stuff to render
-    SDL_RenderCopy(renderer, playerTex, NULL, NULL);
+    player->Render();
     // this is where we add stuff to render
     SDL_RenderPresent(renderer);
 }
