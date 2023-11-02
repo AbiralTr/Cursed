@@ -1,8 +1,12 @@
 
 #include "GameObject.h"
 #include "game.h"
+#include "map.h"
 GameObject* player;
 GameObject* rin;
+Map* map;
+
+SDL_Renderer* Game::renderer = nullptr;
 
 Game::Game(){
 
@@ -32,8 +36,9 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
         isRunning = true;
     } 
 
-    player = new GameObject("assets/sprites/male_mc/Male_Front_Nuetral.png", renderer, 0, 0);
-    rin = new GameObject("assets/sprites/rin/Rin_Front_Nuetral.png", renderer, 100, 0);
+    player = new GameObject("assets/sprites/male_mc/Male_Front_Nuetral.png", 0, 0);
+    rin = new GameObject("assets/sprites/rin/Rin_Front_Nuetral.png", 100, 0);
+    map = new Map();
 }
 
 void Game::handleEvents(){
@@ -56,6 +61,7 @@ void Game::update(){
 void Game::render(){
     SDL_RenderClear(renderer);
     // this is where we add stuff to render
+    map->drawMap();
     player->Render();
     rin->Render();
 
