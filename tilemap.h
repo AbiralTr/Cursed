@@ -1,10 +1,10 @@
 #pragma once
 #include "game.h"
 
-class Map{
+class TileMap{
     public:
-        Map();
-        ~Map();
+        TileMap();
+        ~TileMap();
 
         void loadMap(int arr[20][25]);
         void drawMap();

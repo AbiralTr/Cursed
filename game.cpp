@@ -1,10 +1,12 @@
 
 #include "GameObject.h"
 #include "game.h"
-#include "map.h"
+#include "tilemap.h"
 GameObject* player;
 GameObject* rin;
-Map* map;
+TileMap* tilemap;
+
+int cnt = 0;
 
 SDL_Renderer* Game::renderer = nullptr;
 
@@ -36,9 +38,11 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
         isRunning = true;
     } 
 
+    Entity playerEntity = Player("First_Player", 1);
     player = new GameObject("assets/sprites/male_mc/Male_Front_Nuetral.png", 0, 0);
+    player->attachEntity(playerEntity);
     rin = new GameObject("assets/sprites/rin/Rin_Front_Nuetral.png", 100, 0);
-    map = new Map();
+    tilemap = new TileMap();
 }
 
 void Game::handleEvents(){
@@ -54,6 +58,8 @@ void Game::handleEvents(){
 }
 
 void Game::update(){
+    cnt++;
+    std::cout << cnt << std::endl;
     player->Update();
     rin->Update();
 }
@@ -61,7 +67,7 @@ void Game::update(){
 void Game::render(){
     SDL_RenderClear(renderer);
     // this is where we add stuff to render
-    map->drawMap();
+    tilemap->drawMap();
     player->Render();
     rin->Render();
 

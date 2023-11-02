@@ -8,10 +8,14 @@ GameObject::GameObject(const char* texturesheet, int x, int y){
     ypos = y;
 }
 
-void GameObject::Update(){
+void GameObject::attachEntity(Entity e){
+    entity = e;
+}
 
-    xpos++;
-    ypos++;
+void GameObject::Update(){
+    // Diagonal Movement
+    // xpos++; 
+    // ypos++;
 
     srcRect.h = 32;
     srcRect.w = 32;

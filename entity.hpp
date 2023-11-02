@@ -1,3 +1,5 @@
+#pragma once
+
 #include <iostream>
 #include <map>
 #include <vector>
@@ -47,6 +49,15 @@ class Entity{
 
         string affinity;
         vector<string> affinities = {"None", "Air", "Fire", "Ice", "Electricity", "Combustion", "Pyschokinesis", "Poison", "Gravity", "Plant"};
+        Entity(){
+            name = "";
+            level = 1;
+            affinity = affinities[0];
+
+            baseDamage = level*2;
+            maxHealthPoints = level*30;
+            healthPoints = maxHealthPoints;
+        }
 
         Entity(string n, int l, int a){
             name = n;
@@ -128,6 +139,22 @@ class Player: public Entity{
         int abilityPower = stats.at("Spirit")*5;
 
     public:
+        
+        Player()
+        : Entity("", 1, 0)
+        {
+            maxHealthPoints = level*15;
+            healthPoints = maxHealthPoints;
+
+            maxStaminaPoints = getLevel()*4;
+            staminaPoints = maxStaminaPoints;
+
+            maxSpiritPoints = getLevel()*3;
+            spiritPoints = maxSpiritPoints;
+
+            techniques.resize(100);
+        }
+
         Player(string n, int l)
         : Entity(n, l, 0)
         {
@@ -292,7 +319,7 @@ class NPC: public Entity{
 
 
 // Functions Purely for test / console !!
-void printCharacterSheet(Player e){
+/* void printCharacterSheet(Player e){
     cout << "Name: " << e.getName() << ", Lv. " << e.getLevel() << endl;
     cout << "HP: " << e.getHp() << " / " << e.getMaxHp() << ", Stamina: " << e.getStamina() << " / " << e.getMaxStamina() << endl;
     cout << "Spirit: " << e.getSpirit() << " / " << e.getMaxSpirit() << ", Stat Point(s): " << e.getStatPoints() << endl;
@@ -339,3 +366,5 @@ void printEntity(Entity e){
     cout << "Damage: " << e.getDamage() << endl;
     cout << "Affinity: " << e.getAffinity() << endl;
 }
+
+*/
