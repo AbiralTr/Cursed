@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "game.h"
 GameObject* player;
+GameObject* rin;
 
 Game::Game(){
 
@@ -31,7 +32,8 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
         isRunning = true;
     } 
 
-    player = new GameObject("assets/sprites/male_mc/Male_Sprite_Front_Nuetral.png", renderer, 0, 0);
+    player = new GameObject("assets/sprites/male_mc/Male_Front_Nuetral.png", renderer, 0, 0);
+    rin = new GameObject("assets/sprites/rin/Rin_Front_Nuetral.png", renderer, 100, 0);
 }
 
 void Game::handleEvents(){
@@ -48,12 +50,15 @@ void Game::handleEvents(){
 
 void Game::update(){
     player->Update();
+    rin->Update();
 }
 
 void Game::render(){
     SDL_RenderClear(renderer);
     // this is where we add stuff to render
     player->Render();
+    rin->Render();
+
     // this is where we add stuff to render
     SDL_RenderPresent(renderer);
 }
