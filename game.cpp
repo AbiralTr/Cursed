@@ -1,4 +1,3 @@
-
 #include "GameObject.h"
 #include "game.h"
 #include "tilemap.h"
@@ -59,7 +58,7 @@ void Game::handleEvents(){
 
 void Game::update(){
     cnt++;
-    std::cout << cnt << std::endl;
+    std::cout << "Frame: " << cnt << std::endl;
     player->Update();
     rin->Update();
 }
